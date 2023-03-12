@@ -1,0 +1,49 @@
+@base_url = http://localhost:3000/api
+
+################################ AUTH #################################
+# @name login
+POST {{base_url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "simei@email.com",
+  "password": "string"
+}
+
+###
+@token = Bearer {{login.response.body.token}}
+
+################################ FILIATIONS #################################
+
+GET {{base_url}}/v1/approachs?false=true&organizationId=1
+Authorization: {{token}}
+##########
+GET {{base_url}}/v1/approachs
+Authorization: {{token}}
+##########
+POST {{base_url}}/v1/approachs
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "description": "teste 111",
+  "organizationsId": 2,
+  "latitude": "13213123123",
+  "longitude": "01289390128938"
+}
+
+##########
+PATCH {{base_url}}/v1/approachs/35
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "description": "teste 12321312",
+  "latitude": "129391827893712", 
+  "longitude": "129391827893712"
+}
+
+##########
+DELETE {{base_url}}/v1/approachs/3
+Authorization: {{token}}

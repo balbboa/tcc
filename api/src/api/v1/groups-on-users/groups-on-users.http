@@ -1,0 +1,45 @@
+@base_url = http://localhost:3000/api
+
+################################ AUTH #################################
+# @name login
+POST {{base_url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "simei@email.com",
+  "password": "string"
+}
+
+###
+@token = Bearer {{login.response.body.token}}
+
+################################ GROUPS ON USERS #################################
+
+GET {{base_url}}/v1/groups_users
+Authorization: {{token}}
+##########
+GET {{base_url}}/v1/groups_users/1
+Authorization: {{token}}
+##########
+POST {{base_url}}/v1/groups_users
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "groupId": 3
+}
+
+##########
+PATCH {{base_url}}/v1/groups_users/1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "groupId": 1
+}
+
+##########
+DELETE {{base_url}}/v1/groups_users/6
+Authorization: {{token}}

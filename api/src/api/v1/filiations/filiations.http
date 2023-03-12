@@ -1,0 +1,44 @@
+@base_url = http://localhost:3000/api
+
+################################ AUTH #################################
+# @name login
+POST {{base_url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "simei@email.com",
+  "password": "string"
+}
+
+###
+@token = Bearer {{login.response.body.token}}
+
+################################ FILIATIONS #################################
+
+GET {{base_url}}/v1/filiations
+Authorization: {{token}}
+##########
+GET {{base_url}}/v1/filiations/1
+Authorization: {{token}}
+##########
+POST {{base_url}}/v1/filiations
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "name": "COMANDO PROGRAMADO"
+}
+
+##########
+PATCH {{base_url}}/v1/filiations/1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "SEM VINCULO"
+}
+
+##########
+DELETE {{base_url}}/v1/filiations/3
+Authorization: {{token}}

@@ -1,0 +1,16 @@
+version: "2"
+services:
+  sentinela-frontend-prod:
+    container_name: sentinela-frontend-prod
+    command: bash -c "yarn build && yarn start"
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8484:3000"
+volumes:
+  sentinela-frontend-prod:
+    external: false

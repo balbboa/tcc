@@ -1,0 +1,11 @@
+@base_url = http://localhost:3000/api/auth
+
+################################ USERS #################################
+
+POST {{base_url}}/login
+Content-Type: application/json
+
+{
+  "email": "simei@email.com",
+  "password": "string"
+}

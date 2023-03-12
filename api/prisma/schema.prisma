@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organizations {
+  id        Int         @id @default(autoincrement())
+  name      String
+  users     Users[]
+  approachs Approachs[]
+  peoples   Peoples[]
+}
+
+model Groups {
+  id    Int             @id @default(autoincrement())
+  name  String
+  users GroupsOnUsers[]
+}
+
+model Users {
+  id             Int             @id @default(autoincrement())
+  name           String
+  email          String
+  password       String
+  registration   String
+  approachs      Approachs[]
+  filiations     Filiations[]
+  address        Address[]
+  peoples        Peoples[]
+  vehicles       Vehicles[]
+  documents      Documents[]
+  organizationId Int
+  status         Boolean         @default(true)
+  createdAt      DateTime        @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime?       @updatedAt @db.Timestamptz(3)
+  organizations  Organizations   @relation(fields: [organizationId], references: [id])
+  groups         GroupsOnUsers[]
+  Photos         Photos[]
+}
+
+model GroupsOnUsers {
+  userId    Int
+  groupId   Int
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  id        Int      @id @default(autoincrement())
+  group     Groups   @relation(fields: [groupId], references: [id])
+  user      Users    @relation(fields: [userId], references: [id])
+}
+
+model Filiations {
+  id        Int       @id @default(autoincrement())
+  name      String
+  userId    Int
+  users     Users     @relation(fields: [userId], references: [id])
+  peoples   Peoples[]
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Documents {
+  id        Int       @id @default(autoincrement())
+  document  String    @unique
+  peopleId  Int?
+  userId    Int
+  users     Users     @relation(fields: [userId], references: [id])
+  peoples   Peoples?  @relation(fields: [peopleId], references: [id])
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Photos {
+  id          Int        @id @default(autoincrement())
+  url         String
+  description String?
+  type        String?
+  userId      Int
+  users       Users      @relation(fields: [userId], references: [id])
+  vehicleId   Int?
+  vehicles    Vehicles?  @relation(fields: [vehicleId], references: [id])
+  approachId  Int?
+  approachs   Approachs? @relation(fields: [approachId], references: [id])
+  peopleId    Int?
+  peoples     Peoples?   @relation(fields: [peopleId], references: [id])
+  createdAt   DateTime   @default(now()) @db.Timestamptz(3)
+}
+
+model Address {
+  id        Int         @id @default(autoincrement())
+  street    String?
+  district  String?
+  number    String?
+  city      String?
+  state     String?
+  userId    Int
+  users     Users       @relation(fields: [userId], references: [id])
+  peoples   Peoples[]
+  approachs Approachs[]
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime?   @updatedAt @db.Timestamptz(3)
+}
+
+model Peoples {
+  id              Int           @id @default(autoincrement())
+  status          Boolean       @default(false)
+  name            String?
+  aka             String?
+  motherName      String?
+  sex             String?
+  birthday        String?
+  userId          Int
+  users           Users         @relation(fields: [userId], references: [id])
+  photos          Photos[]
+  document        String?
+  documents       Documents[]
+  organizationsId Int
+  organizations   Organizations @relation(fields: [organizationsId], references: [id])
+  filiationsId    Int?
+  filiations      Filiations?   @relation(fields: [filiationsId], references: [id])
+  approachId      Int?
+  approachs       Approachs?    @relation(fields: [approachId], references: [id])
+  addressId       Int?
+  address         Address?      @relation(fields: [addressId], references: [id])
+  createdAt       DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime?     @updatedAt @db.Timestamptz(3)
+}
+
+model Vehicles {
+  id         Int        @id @default(autoincrement())
+  plate      String?
+  userId     Int
+  users      Users      @relation(fields: [userId], references: [id])
+  approachId Int?
+  approachs  Approachs? @relation(fields: [approachId], references: [id])
+  photos     Photos[]
+  createdAt  DateTime   @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime?  @updatedAt @db.Timestamptz(3)
+}
+
+model Approachs {
+  id              Int           @id @default(autoincrement())
+  status          Boolean       @default(false)
+  description     String?
+  latitude        String?
+  longitude       String?
+  userId          Int
+  users           Users         @relation(fields: [userId], references: [id])
+  organizationsId Int
+  organizations   Organizations @relation(fields: [organizationsId], references: [id])
+  photos          Photos[]
+  vehicles        Vehicles[]
+  peoples         Peoples[]
+  addressId       Int?
+  address         Address?      @relation(fields: [addressId], references: [id])
+  createdAt       DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime?     @updatedAt @db.Timestamptz(3)
+}

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "GroupsOnUsers" ALTER COLUMN "createdAt" SET DATA TYPE TIMESTAMPTZ(3);

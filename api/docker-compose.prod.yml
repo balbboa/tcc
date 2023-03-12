@@ -1,0 +1,46 @@
+services:
+  api_prod:
+    container_name: sentinela-backend-prod
+    build:
+      dockerfile: Dockerfile
+      context: .
+      # Only will build production stage from our dockerfile
+      target: production
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_prod:5432/${POSTGRES_DB}?schema=public
+      TZ: America/Fortaleza
+    # Run a command against the production stage of the image
+    command: yarn start:prod && npx prisma generate
+    ports:
+      - 3002:3000
+    depends_on:
+      - postgres_prod
+    networks:
+      - sentinela_prod
+  postgres_prod:
+    container_name: sentinela-postgres-prod
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: America/Fortaleza
+    ports:
+      - '5432:5432'
+    volumes:
+      - sentinela-postgres-prod:/var/lib/postgresql/data
+    networks:
+      - sentinela_prod
+
+volumes:
+  sentinela-postgres-prod:
+    external: false
+
+networks:
+  sentinela_prod:
+    external: false

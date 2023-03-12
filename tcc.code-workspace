@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": "api"
+    },
+    {
+      "path": "web"
+    }
+  ],
+  "settings": {
+    "git.branchProtection": ["main"],
+    "git.branchProtectionPrompt": "alwaysPrompt",
+    "typescript.tsdk": "api/node_modules/typescript/lib"
+  }
+}
