@@ -2,16 +2,9 @@
 import {
   Box,
   Button,
-  FormLabel,
-  Grid,
-  GridItem,
-  Image,
-  Input,
-  ListItem,
-  OrderedList,
-  SimpleGrid,
+  FormLabel, Input, SimpleGrid,
   Textarea,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 // Componentes interno
 import { GetServerSideProps } from "next";
@@ -46,20 +39,20 @@ const ApproachView = () => {
   }, []);
 
   return (
-    <Layout props={{ title: "Visualizando evento" }}>
-      <SimpleGrid minChildWidth="420px" spacing="10px">
+    <Layout props={{ title: "Criar tco" }}>
+      <SimpleGrid minChildWidth="300px" spacing="15px">
         <Box>
           <Card
             props={{
-              title: "Dados do evento",
+              title: "Dados do TCO",
             }}
           >
-            <Box p={3}>
+            <Box p={5}>
               <FormLabel>Descrição</FormLabel>
               <Textarea
                 value={event.description}
                 onChange={() => ""}
-                placeholder="Descrição do evento"
+                placeholder="Descrição do TCO"
                 bg={useColorModeValue("white", "gray.700")}
               />
             </Box>
@@ -69,15 +62,15 @@ const ApproachView = () => {
               title: "Localização",
             }}
           >
-            <Box p={3}>
-              <SimpleGrid minChildWidth="120px" spacing="5px">
+            <Box p={5}>
+              <SimpleGrid minChildWidth="120px" spacing="15px">
                 <Box>
                   <FormLabel>Latitude</FormLabel>
                   <Input
                     type="text"
                     value={event.latitude}
                     onChange={() => ""}
-                    placeholder="Descrição do evento"
+                    placeholder="Latitude"
                     bg={useColorModeValue("white", "gray.700")}
                   />
                 </Box>
@@ -87,45 +80,45 @@ const ApproachView = () => {
                     type="text"
                     value={event.longitude}
                     onChange={() => ""}
-                    placeholder="Descrição do evento"
+                    placeholder="Longitude"
                     bg={useColorModeValue("white", "gray.700")}
                   />
                 </Box>
               </SimpleGrid>
             </Box>
-            <Box p={3}>
-              <Grid templateColumns="repeat(3, 1fr)" gap={1}>
-                <GridItem colSpan={2}>
+            <Box p={5} pt={0}>
+              <SimpleGrid minChildWidth="120px" spacing="15px">
+                <Box>
                   <FormLabel>Rua</FormLabel>
                   <Input
                     type="text"
                     value={event.address?.street}
                     onChange={() => ""}
-                    placeholder="Nome da rua"
+                    placeholder="Rua"
                     bg={useColorModeValue("white", "gray.700")}
                   />
-                </GridItem>
-                <GridItem colSpan={1}>
+                </Box>
+                <Box>
                   <FormLabel>Bairro</FormLabel>
                   <Input
                     type="text"
                     value={event.address?.district}
                     onChange={() => ""}
-                    placeholder="Nome do evento"
+                    placeholder="Bairro"
                     bg={useColorModeValue("white", "gray.700")}
                   />
-                </GridItem>
-              </Grid>
+                </Box>
+              </SimpleGrid>
             </Box>
-            <Box p={3}>
-              <SimpleGrid minChildWidth="120px" spacing="5px">
+            <Box p={5} pt={0}>
+              <SimpleGrid minChildWidth="120px" spacing="15px">
                 <Box>
                   <FormLabel>Cidade</FormLabel>
                   <Input
                     type="text"
                     value={event.address?.city}
                     onChange={() => ""}
-                    placeholder="Nome da cidade"
+                    placeholder="Cidade"
                     bg={useColorModeValue("white", "gray.700")}
                   />
                 </Box>
@@ -135,7 +128,7 @@ const ApproachView = () => {
                     type="text"
                     value={event.address?.state}
                     onChange={() => ""}
-                    placeholder="Nome do estado"
+                    placeholder="Estado"
                     bg={useColorModeValue("white", "gray.700")}
                   />
                 </Box>
@@ -149,97 +142,8 @@ const ApproachView = () => {
             onClick={() => submitSOAPRequest()}
             mt={5}
           >
-            Aprovar evento
+            Criar TCO
           </Button>
-        </Box>
-        <Box>
-          <Card
-            props={{
-              title: "Imagens do evento",
-            }}
-          >
-            <SimpleGrid minChildWidth="200px" spacing="5px" p={3}>
-              {event.photos?.map((photo, index) => {
-                return (
-                  <Box key={index} p={1}>
-                    <a
-                      href={
-                        process.env.NEXT_PUBLIC_API_URL +
-                        "/uploads/" +
-                        photo.url
-                      }
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Image
-                        src={
-                          process.env.NEXT_PUBLIC_API_URL +
-                          "/uploads/" +
-                          photo.url
-                        }
-                        alt="Foto da abordagem"
-                        key={index}
-                        borderRadius={4}
-                      />
-                    </a>
-                    <Box
-                      p={2}
-                      bg={"gray.700"}
-                      color="white"
-                      borderRadius={4}
-                      mt={2}
-                    >
-                      {photo.description}
-                    </Box>
-                  </Box>
-                );
-              })}
-            </SimpleGrid>
-          </Card>
-          <Card
-            props={{
-              title: "Pessoas vinculadas",
-            }}
-          >
-            <Box p={2}>
-              <OrderedList ml={5}>
-                {event.peoples?.map((people, index) => {
-                  return (
-                    <a
-                      href={`../pessoas/` + people.id}
-                      key={index}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <ListItem>{people.name}</ListItem>
-                    </a>
-                  );
-                })}
-              </OrderedList>
-            </Box>
-          </Card>
-          <Card
-            props={{
-              title: "Veículos vinculados",
-            }}
-          >
-            <Box p={2}>
-              <OrderedList ml={5}>
-                {event.vehicles?.map((vehicle, index) => {
-                  return (
-                    <a
-                      href={event.id + `/veiculos/` + vehicle.id}
-                      key={index}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <ListItem>{vehicle.plate}</ListItem>
-                    </a>
-                  );
-                })}
-              </OrderedList>
-            </Box>
-          </Card>
         </Box>
       </SimpleGrid>
     </Layout>

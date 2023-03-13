@@ -1,42 +1,18 @@
 import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
-  Td,
-  Tr,
-  useColorModeValue,
-  useToast,
-  Text,
-  useDisclosure,
-  Badge,
-  Popover,
-  PopoverTrigger,
-  PopoverArrow,
-  PopoverHeader,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverBody,
-  UnorderedList,
-  ListItem,
-  Spinner,
+  Badge, Box,
+  Button, Heading, ListItem, Popover, PopoverArrow, PopoverBody, PopoverCloseButton,
+  PopoverContent, PopoverHeader, PopoverTrigger, Spinner, Td, Text, Tr, UnorderedList, useColorModeValue, useDisclosure, useToast
 } from "@chakra-ui/react";
 // React
 import { Fragment, ReactNode, useEffect, useState } from "react";
 // Next
 import { GetServerSideProps } from "next";
 // Icones
-import { MdOutlineAdminPanelSettings, MdManageAccounts } from "react-icons/md";
-import { FaUsersCog, FaStreetView } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 // Layout
 import Layout from "../../components/Layout";
-import DefaultTable from "../../components/Table";
 import DefaultModal from "../../components/Modal";
+import DefaultTable from "../../components/Table";
 // Cores
 import { colors } from "../../utils/colors";
 // Cookies
@@ -45,25 +21,21 @@ import { BsPlusSquare } from "react-icons/bs";
 // Formulário
 import UserForm, {
   IGroup,
-  IGroupRequest,
+  IGroupRequest
 } from "../../components/Users/userForm";
 // Interfaces
-import {
-  IUserRegister,
-  IUsersRequest,
-  IUserRequest,
-  IGroupsRegister,
-} from "../../functions/system/data/userInterfaces";
 import { getOrganizations } from "../../functions/organizations/data/organizationFunctions";
+import {
+  IGroupsRegister, IUserRegister, IUserRequest, IUsersRequest
+} from "../../functions/system/data/userInterfaces";
 // Funções
 import handleEditUser, {
-  handleSaveUser,
   getGroups,
-  getUsers,
+  getUsers, handleSaveUser
 } from "../../functions/system/data/userFunctions";
 
-import { TUser } from "../contexts";
 import { IOrganizationRequest } from "../../functions/organizations/data/organizationsInterfaces";
+import { TUser } from "../contexts";
 
 export const USER_INITIAL_DATA: IUserRegister = {
   name: "",
@@ -80,34 +52,6 @@ interface StatsCardProps {
   stat: string;
   icon: ReactNode;
 }
-const StatsCard = (props: StatsCardProps) => {
-  const { title, stat, icon } = props;
-  return (
-    <Stat
-      px={{ base: 2, md: 4 }}
-      py={"5"}
-      shadow={"md"}
-      bg={useColorModeValue("white", colors.grayWolf)}
-      rounded={"lg"}
-    >
-      <Flex justifyContent={"space-between"}>
-        <Box pl={{ base: 2, md: 4 }}>
-          <StatLabel fontWeight={"medium"}>{title}</StatLabel>
-          <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
-            {stat}
-          </StatNumber>
-        </Box>
-        <Box
-          my={"auto"}
-          color={useColorModeValue("gray.800", "gray.200")}
-          alignContent={"center"}
-        >
-          {icon}
-        </Box>
-      </Flex>
-    </Stat>
-  );
-};
 
 const System = () => {
   // hooks
@@ -235,39 +179,7 @@ const System = () => {
           >
             Usuários do Sistema
           </Heading>
-          <Text fontSize="md" mt={2} mb={5}>
-            Clique em um cartão para filtrar
-          </Text>
-          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 2, lg: 2 }}>
-            <a href="#administradores">
-              <StatsCard
-                title={"Administradores"}
-                stat={"7"}
-                icon={<MdOutlineAdminPanelSettings size={"3em"} />}
-              />
-            </a>
-            <a href="#coordenadores">
-              <StatsCard
-                title={"Coordenadores"}
-                stat={"1,000"}
-                icon={<FaUsersCog size={"3em"} />}
-              />
-            </a>
-            <a href="#gestores">
-              <StatsCard
-                title={"Gestores"}
-                stat={"5,000"}
-                icon={<MdManageAccounts size={"3em"} />}
-              />
-            </a>
-            <a href="#ostensivos">
-              <StatsCard
-                title={"Ostensivos"}
-                stat={"7"}
-                icon={<FaStreetView size={"3em"} />}
-              />
-            </a>
-          </SimpleGrid>
+          
           {/* Formulário */}
           <DefaultModal
             props={{

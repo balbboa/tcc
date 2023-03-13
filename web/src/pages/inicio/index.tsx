@@ -5,7 +5,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 // Cookies
@@ -50,8 +50,9 @@ const Home = () => {
     const { title1, title2, username, events, icon } = props;
     return (
       <Stat
-        m={"20"}
-        px={{ base: 2, md: 10 }}
+        mt={ {base: 5, md: 0 } }
+        m={{ md: 20 }}
+        px={{ base: 5, md: 10 }}
         py={"10"}
         shadow={"lg"}
         bg={useColorModeValue("white", colors.grayWolf)}
@@ -71,6 +72,7 @@ const Home = () => {
             </StatNumber>
           </Box>
           <Box
+            display={{ base: 'none', md: 'block' }}
             my={"auto"}
             color={useColorModeValue("gray.800", "gray.200")}
             alignContent={"center"}
@@ -87,7 +89,7 @@ const Home = () => {
       Bem-vindo ao sistema,
       <StatsCard
         title1={"Nome"}
-        title2={"Eventos pendentes"}
+        title2={"Meus TCOs"}
         username={user.name}
         events={approachsList?.count}
         icon={<FaUser size={"3em"} />}
