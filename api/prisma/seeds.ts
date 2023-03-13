@@ -40,8 +40,8 @@ async function main() {
   // USUÁRIOS
   const userData = [
     {
-      name: 'Simei Thander',
-      email: 'simei@email.com',
+      name: 'Arthur Balboa',
+      email: 'arthur@email.com',
       organizationId: 1,
       registration: '000000',
       password: await bcrypt.hash('string', 10),
@@ -54,6 +54,22 @@ async function main() {
       data: userSeed,
     });
     console.log(`Created user with id: ${user.id}`);
+  }
+  console.log(`Seeding finished.`);
+
+  // Permissão USUÁRIO 1
+  const groupsOnUsers = [
+    {
+      userId: 1,
+      groupId: 5,
+    },
+  ];
+  console.log(`Start seeding master permission on usr 01...`);
+  for (const groupsOnUsersSeed of groupsOnUsers) {
+    await prisma.groupsOnUsers.create({
+      data: groupsOnUsersSeed,
+    });
+    console.log(`Created permission MASTER to usr 01`);
   }
   console.log(`Seeding finished.`);
 }

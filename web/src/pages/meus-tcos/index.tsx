@@ -10,15 +10,15 @@ import { Fragment, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { BsMap } from "react-icons/bs";
 // Componentes interno
-import Layout from "../../../components/Layout";
-import DefaultTable from "../../../components/Table";
+import Layout from "../../components/Layout";
+import DefaultTable from "../../components/Table";
 // Funções global
-import { recoverUserInformation } from "../../../services/auth";
-import { colors } from "../../../utils/colors";
+import { recoverUserInformation } from "../../services/auth";
+import { colors } from "../../utils/colors";
 // Interfaces
-import { TUser } from "../../contexts";
+import { TUser } from "../contexts";
 // Funções interna
-import getApproachesWaiting from "../../../functions/wait/data/approachFunctions";
+import getApproachesWaiting from "../../functions/wait/data/approachFunctions";
 
 export interface IAddres {
   id: number;
@@ -117,21 +117,20 @@ interface IApproachesWaiting {
 const ApproachesWaiting = () => {
   const [approachsList, setApproachList] = useState<IApproach[] | any>();
   const handleGetData = async () => {
-
     // Obtem o usuário logado
     const userLogged = await recoverUserInformation();
 
     // Obtem as abordagens
     const approachs = await getApproachesWaiting(userLogged.organizations.id);
     setApproachList(approachs);
-  }
+  };
 
   useEffect(() => {
     handleGetData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(approachsList)
+  console.log(approachsList);
 
   // Cor do botão de visualizar
   const colorButtonView = useColorModeValue("gray.300", colors.graySky);
@@ -156,14 +155,15 @@ const ApproachesWaiting = () => {
                     {/* ${approach.latitude},${approach.longitude} */}
                     <a
                       target={"_blank"}
-                      href={`https://www.google.com/maps/place/${approach.address?.street +
+                      href={`https://www.google.com/maps/place/${
+                        approach.address?.street +
                         "+" +
                         approach.address?.district +
                         "+" +
                         approach.address?.city +
                         "+" +
                         approach.address?.state
-                        }`}
+                      }`}
                       rel="noreferrer"
                       style={{
                         display: "flex",

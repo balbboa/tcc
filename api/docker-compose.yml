@@ -1,27 +1,6 @@
 services:
-  api_dev:
-    container_name: sentinela-backend-dev
-    build:
-      dockerfile: Dockerfile
-      context: .
-      # Only will build development stage from our dockerfile
-      target: development
-    volumes:
-      - .:/usr/src/app
-    env_file:
-      - .env
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_dev:5432/${POSTGRES_DB}?schema=public
-    # Run a command against the development stage of the image
-    command: yarn start:dev && npx prisma generate
-    ports:
-      - 3002:3000
-    depends_on:
-      - postgres_dev
-    networks:
-      - sentinela_dev
   postgres_dev:
-    container_name: sentinela-postgres-dev
+    container_name: tco-postgres-dev
     image: postgres
     restart: always
     environment:
@@ -32,21 +11,14 @@ services:
     ports:
       - '5433:5432'
     volumes:
-      - sentinela-postgres-dev:/var/lib/postgresql/data
+      - tco-postgres-dev:/var/lib/postgresql/data
     networks:
-      - sentinela_dev
-
-  adminer:
-    image: adminer
-    ports:
-      - 8080:8080
-    networks:
-      - sentinela_dev
+      - tco_dev
 
 volumes:
-  sentinela-postgres-dev:
+  tco-postgres-dev:
     external: false
 
 networks:
-  sentinela_dev:
+  tco_dev:
     external: false

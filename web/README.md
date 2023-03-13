@@ -1,4 +1,4 @@
-# SENTINELA - Frontend
+# TCO - Frontend
 
 - Aplicação em NextJS
 

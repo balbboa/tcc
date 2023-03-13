@@ -23,7 +23,7 @@ interface ILayout {
 
 export default function Layout({ children, props }: ILayout) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const pageTitle = `SENTINELA :: ${props.title} ::`;
+  const pageTitle = `TCO :: ${props.title} ::`;
   return (
     <>
       <Head>

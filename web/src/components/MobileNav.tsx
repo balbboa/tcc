@@ -2,11 +2,21 @@
 import { useContext } from "react";
 // Chakra UI
 import {
-  Box, Button, Flex, FlexProps, HStack, IconButton, Menu,
+  Box,
+  Button,
+  Flex,
+  FlexProps,
+  HStack,
+  IconButton,
+  Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
-  MenuList, Text, useColorMode, useColorModeValue, VStack
+  MenuList,
+  Text,
+  useColorMode,
+  useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 // Icones
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -69,7 +79,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        SENTINELA
+        TCO
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>

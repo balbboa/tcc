@@ -33,7 +33,7 @@ import { AuthContext } from "./contexts";
 const Login = () => {
   // Hooks
   const [login, setLogin] = useState({
-    email: "simei@email.com",
+    email: "arthur@email.com",
     password: "string",
   });
   const { colorMode } = useColorMode();
@@ -64,7 +64,7 @@ const Login = () => {
       <GlobalStyle />
       <BackgroundImage />
       <Head>
-        <title>SENTINELA :: Login ::</title>
+        <title>TCO :: Login ::</title>
       </Head>
       <Flex minH={"100vh"} align={"center"} justify={"center"}>
         <Stack spacing={8} mx={"auto"} w={450} maxW={800} py={12} px={6}>
@@ -89,7 +89,7 @@ const Login = () => {
               style={{ marginTop: 20 }}
               color={useColorModeValue("gray.200", "gray.300")}
             >
-              SENTINELA
+              TCO
             </Heading>
           </Stack>
           <Box
@@ -148,7 +148,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const BackgroundImage = styled.div`
-  background-image: url("images/bg_wolf.jpg");
+  background-image: url("images/bg.jpg");
   position: absolute;
   z-index: -1;
   top: 0;

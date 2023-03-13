@@ -28,7 +28,6 @@ model Users {
   password       String
   registration   String
   approachs      Approachs[]
-  filiations     Filiations[]
   address        Address[]
   peoples        Peoples[]
   vehicles       Vehicles[]
@@ -49,16 +48,6 @@ model GroupsOnUsers {
   id        Int      @id @default(autoincrement())
   group     Groups   @relation(fields: [groupId], references: [id])
   user      Users    @relation(fields: [userId], references: [id])
-}
-
-model Filiations {
-  id        Int       @id @default(autoincrement())
-  name      String
-  userId    Int
-  users     Users     @relation(fields: [userId], references: [id])
-  peoples   Peoples[]
-  createdAt DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
 }
 
 model Documents {
@@ -118,8 +107,6 @@ model Peoples {
   documents       Documents[]
   organizationsId Int
   organizations   Organizations @relation(fields: [organizationsId], references: [id])
-  filiationsId    Int?
-  filiations      Filiations?   @relation(fields: [filiationsId], references: [id])
   approachId      Int?
   approachs       Approachs?    @relation(fields: [approachId], references: [id])
   addressId       Int?

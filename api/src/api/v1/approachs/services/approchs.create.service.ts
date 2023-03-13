@@ -132,11 +132,6 @@ export class ApproachCreateService {
               photos: {
                 createMany: { data: peoplePhotos },
               },
-              filiations: {
-                connect: {
-                  id: people.filiation,
-                },
-              },
               approachs: {
                 connect: {
                   id: approachs.id,

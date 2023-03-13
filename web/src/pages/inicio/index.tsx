@@ -1,5 +1,12 @@
 // Next
-import { Box, Flex, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Stat,
+  StatLabel,
+  StatNumber,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 // Cookies
 import { parseCookies } from "nookies";
@@ -11,7 +18,7 @@ import getApproachesWaiting from "../../functions/wait/data/approachFunctions";
 import { recoverUserInformation } from "../../services/auth";
 import { colors } from "../../utils/colors";
 import { AuthContext } from "../contexts";
-import { IApproach } from "../eventos/espera";
+import { IApproach } from "../meus-tcos";
 
 interface StatsCardProps {
   title1: string;

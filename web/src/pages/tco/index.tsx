@@ -4,20 +4,27 @@ import {
   Button,
   FormLabel,
   Grid,
-  GridItem, Image, Input, ListItem, OrderedList, SimpleGrid,
+  GridItem,
+  Image,
+  Input,
+  ListItem,
+  OrderedList,
+  SimpleGrid,
   Textarea,
-  useColorModeValue
+  useColorModeValue,
 } from "@chakra-ui/react";
 // Componentes interno
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 import { AiOutlineCheckSquare } from "react-icons/ai";
-import Card from "../../../components/Card";
-import Layout from "../../../components/Layout";
-import getEvents from "../../../functions/events/data/eventFunctions";
-import { TUser } from "../../contexts";
-import { IApproach } from "../espera";
+import Card from "../../components/Card";
+import Layout from "../../components/Layout";
+import getEvents from "../../functions/events/data/eventFunctions";
+import { TUser } from "../contexts";
+import { IApproach } from "../meus-tcos";
+
+import submitSOAPRequest from "../../services/soap";
 
 // Componente principal
 const ApproachView = () => {
@@ -31,8 +38,8 @@ const ApproachView = () => {
 
     // Obtem o ID passado pela URL
     const getevent: IApproach = await getEvents(userSession.id);
-    setEvent(getevent)
-  }
+    setEvent(getevent);
+  };
   useEffect(() => {
     handleGetData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,7 +146,7 @@ const ApproachView = () => {
             leftIcon={<AiOutlineCheckSquare />}
             colorScheme="green"
             variant="solid"
-            onClick={() => ""}
+            onClick={() => submitSOAPRequest()}
             mt={5}
           >
             Aprovar evento

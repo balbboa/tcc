@@ -15,7 +15,6 @@ export class ApproachFindOneService {
         peoples: {
           include: {
             photos: true,
-            filiations: true,
           },
         },
         photos: true,

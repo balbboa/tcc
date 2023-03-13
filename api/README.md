@@ -1,4 +1,4 @@
-# SENTINELA - Backend
+# TCO - Backend
 
 - Aplicação em NestJS
 - Versão do Node: 16.16.0 LTS
@@ -7,7 +7,7 @@
 
 - docker-compose build
 - docker-compose up -d
-- logar no adminer com credenciais do .env
 - yarn migrate:dev
-- npx prisma db seed
+- npx prisma migrate reset (for reset)
+- npx prisma db seed (first use)
 - yarn start

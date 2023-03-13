@@ -1,7 +1,15 @@
 // Chakra UI
 import {
   Box,
-  BoxProps, CloseButton, Flex, FlexProps, Icon, Link, Text, useColorMode, useColorModeValue
+  BoxProps,
+  CloseButton,
+  Flex,
+  FlexProps,
+  Icon,
+  Link,
+  Text,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 // React
 import { ReactNode } from "react";
@@ -37,24 +45,24 @@ interface LinkItemProps {
 }
 
 // Link do Menu lateral esquerdo
-const LinkItems: Array<LinkItemProps> =
-  [
-    { name: "Início", icon: FiHome, path: "/" },
-    {
-      name: "Eventos em espera",
-      icon: CgTimer,
-      path: "/eventos/espera",
-    },
-    { name: "Pessoas", icon: FiUsers, path: "/pessoas" },
-    { name: "Facções", icon: AiOutlineFlag, path: "/faccoes" },
-    { name: "Organizações", icon: BiBuilding, path: "/organizacoes" },
-    { name: "Sistema", icon: FiSettings, path: "/sistema" },
-    { name: "Sair", icon: VscSignOut, path: "" },
-  ];
-
+const LinkItems: Array<LinkItemProps> = [
+  { name: "Início", icon: FiHome, path: "/" },
+  {
+    name: "Novo TCO",
+    icon: CgTimer,
+    path: "/tco",
+  },
+  {
+    name: "Meus TCOs",
+    icon: CgTimer,
+    path: "/meus-tcos",
+  },
+  { name: "Organizações", icon: BiBuilding, path: "/organizacoes" },
+  { name: "Sistema", icon: FiSettings, path: "/sistema" },
+  { name: "Sair", icon: VscSignOut, path: "" },
+];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-
   const { colorMode } = useColorMode();
   return (
     <Box
@@ -81,7 +89,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             alt="Sentinela Logo"
           />
           <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-            SENTINELA
+            TCO
           </Text>
         </Flex>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -147,7 +155,6 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 export default SidebarContent;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-
   const { user: user } = parseCookies();
   const parseUser = JSON.parse(user);
   const userSession: TUser = parseUser;

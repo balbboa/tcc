@@ -1,7 +1,7 @@
 // NextJS
 import { GetServerSidePropsContext, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { IApproachRequest } from "../../../pages/eventos/espera";
+import { IApproachRequest } from "../../../pages/meus-tcos";
 // AXIOS
 import { getAPIClient } from "../../../services/axios";
 

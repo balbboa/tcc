@@ -6,6 +6,6 @@ POST {{base_url}}/login
 Content-Type: application/json
 
 {
-  "email": "simei@email.com",
+  "email": "arthur@email.com",
   "password": "string"
 }

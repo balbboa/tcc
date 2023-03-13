@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getAPIClient } from "../../../services/axios";
-import { IApproach } from "../../../pages/eventos/espera";
+import { IApproach } from "../../../pages/meus-tcos";
 
 const getEvents = async (
   id: number,
