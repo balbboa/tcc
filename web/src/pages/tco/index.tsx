@@ -2,9 +2,11 @@
 import {
   Box,
   Button,
-  FormLabel, Input, SimpleGrid,
+  FormLabel,
+  Input,
+  SimpleGrid,
   Textarea,
-  useColorModeValue
+  useColorModeValue,
 } from "@chakra-ui/react";
 // Componentes interno
 import { GetServerSideProps } from "next";
@@ -21,6 +23,8 @@ import submitSOAPRequest from "../../services/soap";
 
 // Componente principal
 const ApproachView = () => {
+  const [description, setDescription] = useState("");
+  const [formError, setFormError] = useState("");
   const [event, setEvent] = useState<IApproach>({} as IApproach);
 
   const handleGetData = async () => {
@@ -50,8 +54,12 @@ const ApproachView = () => {
             <Box p={5}>
               <FormLabel>Descrição</FormLabel>
               <Textarea
-                value={event.description}
-                onChange={() => ""}
+                isInvalid={formError === "description"}
+                value={description}
+                onChange={(data) => {
+                  setDescription(data.currentTarget.value);
+                  setFormError("");
+                }}
                 placeholder="Descrição do TCO"
                 bg={useColorModeValue("white", "gray.700")}
               />
