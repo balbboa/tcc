@@ -116,7 +116,7 @@ const ApproachesWaiting = () => {
   const handleGetData = async () => {
     // Obtem o usuário logado
     const userLogged = await recoverUserInformation();
-
+    console.log(userLogged);
     // Obtem as abordagens
     const approachs = await getApproachesWaiting(userLogged.organizations.id);
     setApproachList(approachs);
