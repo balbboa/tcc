@@ -1,6 +1,7 @@
 // Chakra UI
 import {
-  Box,
+  Alert, AlertDescription, AlertIcon,
+  AlertTitle, Box,
   Button,
   FormLabel, Input, SimpleGrid,
   Textarea,
@@ -9,33 +10,90 @@ import {
 // Componentes interno
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiOutlineCheckSquare } from "react-icons/ai";
 import Card from "../../components/Card";
 import Layout from "../../components/Layout";
-import getEvents from "../../functions/events/data/eventFunctions";
-import { TUser } from "../contexts";
-import { IApproach } from "../meus-tcos";
-
+import createApproach from "../../functions/events/data/createApproachs";
 import submitSOAPRequest from "../../services/soap";
+import { AuthContext } from "../contexts";
+
+export interface IApproachRegister {
+  city: string;
+  description: string;
+  district: string;
+  latitude: string,
+  longitude: string,
+  number: string;
+  organizationsId: number;
+  state: string;
+  street: string;
+  userId: number;
+}
+
+export const APPR_INITIAL_DATA: IApproachRegister = {
+  description: "",
+  street: '',
+  district: '',
+  number: '',
+  city: '',
+  state: '',
+  latitude: '',
+  longitude: '',
+  organizationsId: 0,
+  userId: 0
+};
 
 // Componente principal
 const ApproachView = () => {
-  const [event, setEvent] = useState<IApproach>({} as IApproach);
+  const { user } = useContext(AuthContext);
+  const [approach, setApproach] = useState<IApproachRegister>(APPR_INITIAL_DATA);
 
-  const handleGetData = async () => {
-    // Obtem o usuário logado
-    const { user: user } = parseCookies();
-    const parseUser = JSON.parse(user);
-    const userSession: TUser = parseUser;
+  // Obtem a geolocalização
+  const getLocation = async () => {
 
-    // Obtem o ID passado pela URL
-    const getevent: IApproach = await getEvents(userSession.id);
-    setEvent(getevent);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setApproach({
+          ...approach,
+          latitude: position.coords.latitude.toString(),
+          longitude: position.coords.longitude.toString(),
+        });
+      })
+    }
+
+    else {
+      <Alert status='error'>
+        <AlertIcon />
+        <AlertTitle>Ocorreu um erro! 🚨</AlertTitle>
+        <AlertDescription>Você precisa permitir o acesso a localização.</AlertDescription>
+      </Alert>
+    }
   };
+
+  const setUserId = async () => {
+      approach.userId = user.id;
+      approach.organizationsId = user.organizations.id;
+  };
+
+  const handleSaveApproach = async (newApproach: IApproachRegister) => {
+    submitSOAPRequest();
+    try {
+      await createApproach(newApproach);
+      <Alert status='success'>
+        <AlertIcon />
+        Sucesso! ✨, TCO cadastrado </Alert>
+    } catch (error) {
+      <Alert status='error'>
+        <AlertIcon />
+        <AlertTitle>Ocorreu um erro! 🚨</AlertTitle>
+        <AlertDescription>Não foi possível realizar o cadastro do TCO.</AlertDescription>
+      </Alert>
+    }
+  }
+
   useEffect(() => {
-    handleGetData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getLocation();
   }, []);
 
   return (
@@ -50,8 +108,11 @@ const ApproachView = () => {
             <Box p={5}>
               <FormLabel>Descrição</FormLabel>
               <Textarea
-                value={event.description}
-                onChange={() => ""}
+                value={approach?.description}
+                onChange={(event) => (setApproach({
+                  ...approach,
+                  description: event.currentTarget.value,
+                }))}
                 placeholder="Descrição do TCO"
                 bg={useColorModeValue("white", "gray.700")}
               />
@@ -67,9 +128,9 @@ const ApproachView = () => {
                 <Box>
                   <FormLabel>Latitude</FormLabel>
                   <Input
+                    readOnly
                     type="text"
-                    value={event.latitude}
-                    onChange={() => ""}
+                    value={approach?.latitude}
                     placeholder="Latitude"
                     bg={useColorModeValue("white", "gray.700")}
                   />
@@ -77,9 +138,9 @@ const ApproachView = () => {
                 <Box>
                   <FormLabel>Longitude</FormLabel>
                   <Input
+                    readOnly
                     type="text"
-                    value={event.longitude}
-                    onChange={() => ""}
+                    value={approach?.longitude}
                     placeholder="Longitude"
                     bg={useColorModeValue("white", "gray.700")}
                   />
@@ -92,8 +153,11 @@ const ApproachView = () => {
                   <FormLabel>Rua</FormLabel>
                   <Input
                     type="text"
-                    value={event.address?.street}
-                    onChange={() => ""}
+                    value={approach.street}
+                    onChange={(event) => (setApproach({
+                      ...approach,
+                      street: event.currentTarget.value,
+                    }))}
                     placeholder="Rua"
                     bg={useColorModeValue("white", "gray.700")}
                   />
@@ -102,8 +166,11 @@ const ApproachView = () => {
                   <FormLabel>Bairro</FormLabel>
                   <Input
                     type="text"
-                    value={event.address?.district}
-                    onChange={() => ""}
+                    value={approach.district}
+                    onChange={(event) => (setApproach({
+                      ...approach,
+                      district: event.currentTarget.value,
+                    }))}
                     placeholder="Bairro"
                     bg={useColorModeValue("white", "gray.700")}
                   />
@@ -116,8 +183,11 @@ const ApproachView = () => {
                   <FormLabel>Cidade</FormLabel>
                   <Input
                     type="text"
-                    value={event.address?.city}
-                    onChange={() => ""}
+                    value={approach.city}
+                    onChange={(event) => (setApproach({
+                      ...approach,
+                      city: event.currentTarget.value,
+                    }))}
                     placeholder="Cidade"
                     bg={useColorModeValue("white", "gray.700")}
                   />
@@ -126,8 +196,11 @@ const ApproachView = () => {
                   <FormLabel>Estado</FormLabel>
                   <Input
                     type="text"
-                    value={event.address?.state}
-                    onChange={() => ""}
+                    value={approach.state}
+                    onChange={(event) => (setApproach({
+                      ...approach,
+                      state: event.currentTarget.value,
+                    }))}
                     placeholder="Estado"
                     bg={useColorModeValue("white", "gray.700")}
                   />
@@ -139,7 +212,10 @@ const ApproachView = () => {
             leftIcon={<AiOutlineCheckSquare />}
             colorScheme="green"
             variant="solid"
-            onClick={() => submitSOAPRequest()}
+            onClick={() => (
+              setUserId(),
+              handleSaveApproach(approach)
+            )}
             mt={5}
           >
             Criar TCO
@@ -169,3 +245,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {},
   };
 };
+

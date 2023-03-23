@@ -33,6 +33,7 @@
     "@types/node": "^18.7.8",
     "@types/nookies": "^2.0.3",
     "@types/react": "^18.0.17",
+    "@types/uuid": "^9.0.1",
     "babel-plugin-styled-components": "^2.0.7",
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",

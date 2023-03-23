@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 // Cookies
-import { setCookie, parseCookies } from "nookies";
+import { parseCookies, setCookie } from "nookies";
 // Rotas
 import Router from "next/router";
 // Manipulação do usuário

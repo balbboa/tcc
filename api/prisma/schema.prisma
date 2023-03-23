@@ -12,7 +12,6 @@ model Organizations {
   name      String
   users     Users[]
   approachs Approachs[]
-  peoples   Peoples[]
 }
 
 model Groups {
@@ -28,17 +27,12 @@ model Users {
   password       String
   registration   String
   approachs      Approachs[]
-  address        Address[]
-  peoples        Peoples[]
-  vehicles       Vehicles[]
-  documents      Documents[]
   organizationId Int
   status         Boolean         @default(true)
   createdAt      DateTime        @default(now()) @db.Timestamptz(3)
   updatedAt      DateTime?       @updatedAt @db.Timestamptz(3)
   organizations  Organizations   @relation(fields: [organizationId], references: [id])
   groups         GroupsOnUsers[]
-  Photos         Photos[]
 }
 
 model GroupsOnUsers {
@@ -50,83 +44,6 @@ model GroupsOnUsers {
   user      Users    @relation(fields: [userId], references: [id])
 }
 
-model Documents {
-  id        Int       @id @default(autoincrement())
-  document  String    @unique
-  peopleId  Int?
-  userId    Int
-  users     Users     @relation(fields: [userId], references: [id])
-  peoples   Peoples?  @relation(fields: [peopleId], references: [id])
-  createdAt DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
-}
-
-model Photos {
-  id          Int        @id @default(autoincrement())
-  url         String
-  description String?
-  type        String?
-  userId      Int
-  users       Users      @relation(fields: [userId], references: [id])
-  vehicleId   Int?
-  vehicles    Vehicles?  @relation(fields: [vehicleId], references: [id])
-  approachId  Int?
-  approachs   Approachs? @relation(fields: [approachId], references: [id])
-  peopleId    Int?
-  peoples     Peoples?   @relation(fields: [peopleId], references: [id])
-  createdAt   DateTime   @default(now()) @db.Timestamptz(3)
-}
-
-model Address {
-  id        Int         @id @default(autoincrement())
-  street    String?
-  district  String?
-  number    String?
-  city      String?
-  state     String?
-  userId    Int
-  users     Users       @relation(fields: [userId], references: [id])
-  peoples   Peoples[]
-  approachs Approachs[]
-  createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime?   @updatedAt @db.Timestamptz(3)
-}
-
-model Peoples {
-  id              Int           @id @default(autoincrement())
-  status          Boolean       @default(false)
-  name            String?
-  aka             String?
-  motherName      String?
-  sex             String?
-  birthday        String?
-  userId          Int
-  users           Users         @relation(fields: [userId], references: [id])
-  photos          Photos[]
-  document        String?
-  documents       Documents[]
-  organizationsId Int
-  organizations   Organizations @relation(fields: [organizationsId], references: [id])
-  approachId      Int?
-  approachs       Approachs?    @relation(fields: [approachId], references: [id])
-  addressId       Int?
-  address         Address?      @relation(fields: [addressId], references: [id])
-  createdAt       DateTime      @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime?     @updatedAt @db.Timestamptz(3)
-}
-
-model Vehicles {
-  id         Int        @id @default(autoincrement())
-  plate      String?
-  userId     Int
-  users      Users      @relation(fields: [userId], references: [id])
-  approachId Int?
-  approachs  Approachs? @relation(fields: [approachId], references: [id])
-  photos     Photos[]
-  createdAt  DateTime   @default(now()) @db.Timestamptz(3)
-  updatedAt  DateTime?  @updatedAt @db.Timestamptz(3)
-}
-
 model Approachs {
   id              Int           @id @default(autoincrement())
   status          Boolean       @default(false)
@@ -134,14 +51,14 @@ model Approachs {
   latitude        String?
   longitude       String?
   userId          Int
+  street          String?
+  district        String?
+  number          String?
+  city            String?
+  state           String?
   users           Users         @relation(fields: [userId], references: [id])
   organizationsId Int
   organizations   Organizations @relation(fields: [organizationsId], references: [id])
-  photos          Photos[]
-  vehicles        Vehicles[]
-  peoples         Peoples[]
-  addressId       Int?
-  address         Address?      @relation(fields: [addressId], references: [id])
   createdAt       DateTime      @default(now()) @db.Timestamptz(3)
   updatedAt       DateTime?     @updatedAt @db.Timestamptz(3)
 }

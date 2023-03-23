@@ -11,18 +11,6 @@ export class ApproachFindOneService {
         id: id,
       },
       include: {
-        address: true,
-        peoples: {
-          include: {
-            photos: true,
-          },
-        },
-        photos: true,
-        vehicles: {
-          include: {
-            photos: true,
-          },
-        },
         users: {
           select: {
             id: true,

@@ -92,9 +92,6 @@ export interface IApproach {
   createdAt: string;
   updatedAt: string;
   address: IAddres;
-  peoples: IPeople[];
-  photos: IPhotos[];
-  vehicles: IVehicle[];
   users: IUser;
 }
 
@@ -174,8 +171,6 @@ const ApproachesWaiting = () => {
                       Mapa <BsMap style={{ marginLeft: 5 }} />
                     </a>
                   </Td>
-                  <Td>{approach.peoples.length}</Td>
-                  <Td>{approach.vehicles.length}</Td>
                   <Td>
                     {new Date(approach.createdAt).toLocaleString("pt-BR", {
                       timeZone: "America/Recife",

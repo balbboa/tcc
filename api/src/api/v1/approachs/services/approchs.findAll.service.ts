@@ -12,18 +12,6 @@ export class ApproachFindAllService {
         organizationsId: Number(organizationId),
       },
       include: {
-        address: true,
-        peoples: {
-          include: {
-            photos: true,
-          },
-        },
-        photos: true,
-        vehicles: {
-          include: {
-            photos: true,
-          },
-        },
         users: {
           select: {
             id: true,
